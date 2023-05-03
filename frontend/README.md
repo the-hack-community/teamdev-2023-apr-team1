@@ -1,33 +1,25 @@
 # Frontend
+React Nativeを使用した地図アプリケーションです。
 
-map application using react-native.
-
-## Tech
-
+## 使用技術
 - https://reactnative.dev/
 - https://expo.dev/
 
-## Setup
-
+## セットアップ
 - `$ npm install -g expo-cli`
-
 - `$ expo login`
-
 - `$ git clone`
-
 - `$ cd `
-
 - `$ npm install`
 
-rename environment_sample.ts to environment.ts
+`environment_sample.ts`を`environment.ts`にリネームしてください。
 
-GoogleMapApiKey is required.
-set GoogleMapApiKey to app.json and environment.ts.
+GoogleMapApiKeyが必要です。
+`app.json`と`environment.ts`にGoogleMapApiKeyを設定してください。
 
-use of vscode is recommended.
-
-## Start up the server in local
+VS Codeの使用をお勧めします。
+## ローカルでのサーバー起動方法
 
 `$ npm run start`
 
-Pressing a(android) or i(ios) activates the simulator.
+a(Android)またはi(iOS)を押すと、シミュレーターが起動します。
