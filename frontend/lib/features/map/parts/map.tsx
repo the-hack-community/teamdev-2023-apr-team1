@@ -132,7 +132,7 @@ export default function Map() {
 
 const styles = StyleSheet.create({
   map: {
-    ...StyleSheet.absoluteFillObject,
+    // ...StyleSheet.absoluteFillObject,
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height
   },
