@@ -17,6 +17,7 @@ web-build/
 .metro-health-check*
 
 environment.ts
+app.json
 
 node_modules/
 .expo/
