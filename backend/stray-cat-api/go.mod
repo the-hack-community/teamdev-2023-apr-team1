@@ -1,4 +1,4 @@
-module sample-api
+module stray-cat-api
 
 go 1.20
 

@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"sample-api/db"
-	"sample-api/infrastructure/persistence/postgres"
-	"sample-api/presentation/handler"
-	"sample-api/usecase/interactor"
+	"stray-cat-api/db"
+	"stray-cat-api/infrastructure/persistence/postgres"
+	"stray-cat-api/presentation/handler"
+	"stray-cat-api/usecase/interactor"
 	"strings"
 
 	"net/http"
@@ -41,12 +41,21 @@ func main() {
 	}
 	defer db.Close()
 
-	userRepository := postgres.NewUserRepository(db)
-	userInteractor := interactor.UserInteractor{
-		UserRepository: userRepository,
+	// Initialize handler
+	userInfoRepository := postgres.NewUserInfoRepository(db)
+	userInteractor := interactor.UserInfoInteractor{
+		UserInfoRepository: userInfoRepository,
 	}
-	userHandler := handler.UserHandler{
-		UserInteractor: userInteractor,
+	userHandler := handler.UserInfoHandler{
+		UserInfoInteractor: userInteractor,
+	}
+
+	strayCatRepository := postgres.NewStrayCatRepository(db)
+	strayCatInteractor := interactor.StrayCatInteractor{
+		StrayCatRepository: strayCatRepository,
+	}
+	strayCatHandler := handler.StrayCatHandler{
+		StrayCatInteractor: strayCatInteractor,
 	}
 
 	// Initialize Firebase
@@ -54,8 +63,17 @@ func main() {
 
 	r := gin.Default()
 
+	// strayCats := r.Group("/stray-cats")
+	// {
+	// 	strayCats.POST("/", strayCatHandler.Create)
+	// }
+
+	r.POST("/stray-cats", strayCatHandler.Create)
+	r.POST("/users:userId", userHandler.Create)
+
 	api := r.Group("/api")
 	{
+		//
 		v1 := api.Group("/v1")
 		{
 			// 認証が不要なエンドポイント
