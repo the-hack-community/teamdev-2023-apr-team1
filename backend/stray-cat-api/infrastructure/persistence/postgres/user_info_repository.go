@@ -47,7 +47,8 @@ func (r *UserInfoRepository) FindByID(userId string) (*model.UserInfo, error) {
 }
 
 func (r *UserInfoRepository) Store(user *model.UserInfo) error {
-	err := r.DB.QueryRow("INSERT INTO users(name, email) VALUES($1, $2) RETURNING user_id", user.Name, user.Email).Scan(&user.UserID)
+	query := "INSERT INTO users(user_id, name, email) VALUES($1, $2, $3)"
+	_, err := r.DB.Exec(query, user.UserID, user.Name, user.Email)
 	if err != nil {
 		return err
 	}

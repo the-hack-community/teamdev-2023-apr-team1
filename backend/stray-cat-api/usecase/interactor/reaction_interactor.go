@@ -10,7 +10,7 @@ type ReactionInteractor struct {
 	ReactionRepository repository.ReactionRepository
 }
 
-func (i *ReactionInteractor) FindByID(reactionID string) (*model.Reaction, error) {
+func (i *ReactionInteractor) FindByID(reactionID int) (*model.Reaction, error) {
 	return i.ReactionRepository.FindByID(reactionID)
 }
 
@@ -22,6 +22,6 @@ func (i *ReactionInteractor) Update(reaction *model.Reaction) error {
 	return i.ReactionRepository.Update(reaction)
 }
 
-func (i *ReactionInteractor) Delete(reactionID string) error {
+func (i *ReactionInteractor) Delete(reactionID int) error {
 	return i.ReactionRepository.Delete(reactionID)
 }

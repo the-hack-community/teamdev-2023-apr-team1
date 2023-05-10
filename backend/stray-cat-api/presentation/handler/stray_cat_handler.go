@@ -28,8 +28,20 @@ func (h *StrayCatHandler) GetAll(c *gin.Context) {
 }
 
 func (h *StrayCatHandler) GetByID(c *gin.Context) {
-	catID := c.Param("catID")
-	cat, err := h.StrayCatInteractor.FindByID(catID)
+	catIdStr := c.Param("catId")
+	// 空文字列のチェック
+	if catIdStr == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "catId must not be empty"})
+		return
+	}
+
+	// 整数として解釈できるかのチェック
+	catId, err := strconv.Atoi(catIdStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "catId must be a number"})
+		return
+	}
+	cat, err := h.StrayCatInteractor.FindByID(catId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -100,6 +112,7 @@ func (h *StrayCatHandler) Create(c *gin.Context) {
 	// StrayCatオブジェクトを作成
 	strayCat := &model.StrayCat{
 		Name:            name,
+		UserID:          "123",
 		Features:        features,
 		Condition:       condition,
 		CaptureDateTime: captureDateTime,
@@ -117,13 +130,26 @@ func (h *StrayCatHandler) Create(c *gin.Context) {
 }
 
 func (h *StrayCatHandler) Update(c *gin.Context) {
-	catID := c.Param("catID")
+	catIdStr := c.Param("catId")
+	// 空文字列のチェック
+	if catIdStr == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "catId must not be empty"})
+		return
+	}
+
+	// 整数として解釈できるかのチェック
+	catId, err := strconv.Atoi(catIdStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "catId must be a number"})
+		return
+	}
+
 	var cat model.StrayCat
 	if err := c.BindJSON(&cat); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	cat.CatID = catID
+	cat.CatID = catId
 	if err := h.StrayCatInteractor.Update(&cat); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -132,8 +158,21 @@ func (h *StrayCatHandler) Update(c *gin.Context) {
 }
 
 func (h *StrayCatHandler) Delete(c *gin.Context) {
-	catID := c.Param("catID")
-	if err := h.StrayCatInteractor.Delete(catID); err != nil {
+	catIdStr := c.Param("catId")
+	// 空文字列のチェック
+	if catIdStr == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "catId must not be empty"})
+		return
+	}
+
+	// 整数として解釈できるかのチェック
+	catId, err := strconv.Atoi(catIdStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "catId must be a number"})
+		return
+	}
+
+	if err := h.StrayCatInteractor.Delete(catId); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

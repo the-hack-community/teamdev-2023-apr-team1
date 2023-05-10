@@ -15,7 +15,7 @@ func NewReactionRepository(db *sql.DB) repository.ReactionRepository {
 	return &ReactionRepository{DB: db}
 }
 
-func (r *ReactionRepository) FindByID(reactionID string) (*model.Reaction, error) {
+func (r *ReactionRepository) FindByID(reactionID int) (*model.Reaction, error) {
 	reaction := &model.Reaction{}
 	err := r.DB.QueryRow("SELECT reaction_id, user_id, cat_id, date_time FROM reactions WHERE reaction_id = $1", reactionID).Scan(&reaction.ReactionID, &reaction.UserID, &reaction.CatID, &reaction.DateTime)
 	if err == sql.ErrNoRows {
@@ -43,7 +43,7 @@ func (r *ReactionRepository) Update(reaction *model.Reaction) error {
 	return nil
 }
 
-func (r *ReactionRepository) Delete(reactionID string) error {
+func (r *ReactionRepository) Delete(reactionID int) error {
 	_, err := r.DB.Exec("DELETE FROM reactions WHERE reaction_id = $1", reactionID)
 	if err != nil {
 		return err

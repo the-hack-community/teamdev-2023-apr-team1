@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"stray-cat-api/domain/model"
 	"stray-cat-api/usecase/interactor"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -14,8 +15,21 @@ type ReactionHandler struct {
 }
 
 func (h *ReactionHandler) GetByID(c *gin.Context) {
-	reactionID := c.Param("reactionID")
-	reaction, err := h.ReactionInteractor.FindByID(reactionID)
+	reactionIdStr := c.Param("reactionId")
+	// 空文字列のチェック
+	if reactionIdStr == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "reactionId must not be empty"})
+		return
+	}
+
+	// 整数として解釈できるかのチェック
+	reactionId, err := strconv.Atoi(reactionIdStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "reactionId must be a number"})
+		return
+	}
+
+	reaction, err := h.ReactionInteractor.FindByID(reactionId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -37,13 +51,26 @@ func (h *ReactionHandler) Create(c *gin.Context) {
 }
 
 func (h *ReactionHandler) Update(c *gin.Context) {
-	reactionID := c.Param("reactionID")
+	reactionIdStr := c.Param("reactionId")
+	// 空文字列のチェック
+	if reactionIdStr == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "reactionId must not be empty"})
+		return
+	}
+
+	// 整数として解釈できるかのチェック
+	reactionId, err := strconv.Atoi(reactionIdStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "reactionId must be a number"})
+		return
+	}
+
 	var reaction model.Reaction
 	if err := c.BindJSON(&reaction); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	reaction.ReactionID = reactionID
+	reaction.ReactionID = reactionId
 	if err := h.ReactionInteractor.Update(&reaction); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -52,8 +79,21 @@ func (h *ReactionHandler) Update(c *gin.Context) {
 }
 
 func (h *ReactionHandler) Delete(c *gin.Context) {
-	reactionID := c.Param("reactionID")
-	if err := h.ReactionInteractor.Delete(reactionID); err != nil {
+	reactionIdStr := c.Param("reactionId")
+	// 空文字列のチェック
+	if reactionIdStr == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "reactionId must not be empty"})
+		return
+	}
+
+	// 整数として解釈できるかのチェック
+	reactionId, err := strconv.Atoi(reactionIdStr)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "reactionId must be a number"})
+		return
+	}
+
+	if err := h.ReactionInteractor.Delete(reactionId); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

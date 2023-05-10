@@ -14,7 +14,7 @@ func (i *StrayCatInteractor) FindAll() ([]*model.StrayCat, error) {
 	return i.StrayCatRepository.FindAll()
 }
 
-func (i *StrayCatInteractor) FindByID(catID string) (*model.StrayCat, error) {
+func (i *StrayCatInteractor) FindByID(catID int) (*model.StrayCat, error) {
 	return i.StrayCatRepository.FindByID(catID)
 }
 
@@ -26,6 +26,6 @@ func (i *StrayCatInteractor) Update(strayCat *model.StrayCat) error {
 	return i.StrayCatRepository.Update(strayCat)
 }
 
-func (i *StrayCatInteractor) Delete(catID string) error {
+func (i *StrayCatInteractor) Delete(catID int) error {
 	return i.StrayCatRepository.Delete(catID)
 }

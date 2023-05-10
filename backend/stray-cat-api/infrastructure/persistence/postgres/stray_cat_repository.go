@@ -41,7 +41,7 @@ func (r *StrayCatRepository) FindAll() ([]*model.StrayCat, error) {
 	return strayCats, nil
 }
 
-func (r *StrayCatRepository) FindByID(catID string) (*model.StrayCat, error) {
+func (r *StrayCatRepository) FindByID(catID int) (*model.StrayCat, error) {
 	row := r.DB.QueryRow(`SELECT sc.cat_id, sc.user_id, sc.photo_data, sc.capture_date_time, l.lat, l.long, sc.name, sc.features, sc.condition
 						  FROM stray_cats sc JOIN locations l ON sc.location_id = l.location_id WHERE sc.cat_id = $1`, catID)
 
@@ -79,8 +79,8 @@ func (r *StrayCatRepository) Store(strayCat *model.StrayCat) error {
 		return err
 	}
 
-	_, err = tx.Exec("INSERT INTO stray_cats (cat_id, user_id, photo_data, capture_date_time, location_id, name, features, condition) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
-		strayCat.CatID, strayCat.UserID, strayCat.PhotoData, strayCat.CaptureDateTime, locationID, strayCat.Name, strayCat.Features, strayCat.Condition)
+	_, err = tx.Exec("INSERT INTO stray_cats (user_id, photo_data, capture_date_time, location_id, name, features, condition) VALUES ($1, $2, $3, $4, $5, $6, $7)",
+		strayCat.UserID, strayCat.PhotoData, strayCat.CaptureDateTime, locationID, strayCat.Name, strayCat.Features, strayCat.Condition)
 	if err != nil {
 		_ = tx.Rollback()
 		return err
@@ -132,7 +132,7 @@ func (r *StrayCatRepository) Update(strayCat *model.StrayCat) error {
 	return nil
 }
 
-func (r *StrayCatRepository) Delete(catID string) error {
+func (r *StrayCatRepository) Delete(catID int) error {
 	tx, err := r.DB.Begin()
 	if err != nil {
 		return err

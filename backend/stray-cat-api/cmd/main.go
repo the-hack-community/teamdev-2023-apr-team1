@@ -17,6 +17,7 @@ import (
 	firebase "firebase.google.com/go/v4"
 	"google.golang.org/api/option"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 )
@@ -59,45 +60,56 @@ func main() {
 	}
 
 	// Initialize Firebase
-	app := initFirebase()
+	// app := initFirebase()
 
 	r := gin.Default()
+
+	// CORS
+	config := cors.DefaultConfig()
+	config.AllowAllOrigins = true
+	config.AllowMethods = []string{"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"}
+	config.AllowHeaders = []string{"Origin", "Content-Length", "Content-Type"}
+
+	r.Use(cors.New(config))
 
 	// strayCats := r.Group("/stray-cats")
 	// {
 	// 	strayCats.POST("/", strayCatHandler.Create)
 	// }
 
+	r.GET("/users", userHandler.GetAll)
+	r.GET("/users/:userId", userHandler.GetByID)
+	r.POST("/users/:userId", userHandler.Create)
 	r.POST("/stray-cats", strayCatHandler.Create)
-	r.POST("/users:userId", userHandler.Create)
+	r.GET("/stray-cats/:catId", strayCatHandler.GetByID)
 
-	api := r.Group("/api")
-	{
-		//
-		v1 := api.Group("/v1")
-		{
-			// 認証が不要なエンドポイント
-			users := v1.Group("/users")
-			{
-				users.GET("/", userHandler.GetAll)
-				users.GET("/:id", userHandler.GetByID)
-				users.POST("/", userHandler.Create)
-				users.PUT("/:id", userHandler.Update)
-				users.DELETE("/:id", userHandler.Delete)
-			}
+	// api := r.Group("/api")
+	// {
+	// 	//
+	// 	v1 := api.Group("/v1")
+	// 	{
+	// 		// 認証が不要なエンドポイント
+	// 		users := v1.Group("/users")
+	// 		{
+	// 			users.GET("/", userHandler.GetAll)
+	// 			users.GET("/:id", userHandler.GetByID)
+	// 			users.POST("/", userHandler.Create)
+	// 			users.PUT("/:id", userHandler.Update)
+	// 			users.DELETE("/:id", userHandler.Delete)
+	// 		}
 
-			// 認証が必要なエンドポイント
-			authUsers := v1.Group("/auth-users")
-			authUsers.Use(FirebaseAuthMiddleware(app))
-			{
-				authUsers.GET("/", userHandler.GetAll)
-				authUsers.GET("/:id", userHandler.GetByID)
-				authUsers.POST("/", userHandler.Create)
-				authUsers.PUT("/:id", userHandler.Update)
-				authUsers.DELETE("/:id", userHandler.Delete)
-			}
-		}
-	}
+	// 		// 認証が必要なエンドポイント
+	// 		authUsers := v1.Group("/auth-users")
+	// 		authUsers.Use(FirebaseAuthMiddleware(app))
+	// 		{
+	// 			authUsers.GET("/", userHandler.GetAll)
+	// 			authUsers.GET("/:id", userHandler.GetByID)
+	// 			authUsers.POST("/", userHandler.Create)
+	// 			authUsers.PUT("/:id", userHandler.Update)
+	// 			authUsers.DELETE("/:id", userHandler.Delete)
+	// 		}
+	// 	}
+	// }
 
 	r.Run(":8080")
 }

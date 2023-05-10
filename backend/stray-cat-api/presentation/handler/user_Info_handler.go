@@ -32,11 +32,13 @@ func (h *UserInfoHandler) GetByID(c *gin.Context) {
 }
 
 func (h *UserInfoHandler) Create(c *gin.Context) {
+	userId := c.Param("userId")
 	var user model.UserInfo
 	if err := c.BindJSON(&user); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	user.UserID = userId
 	if err := h.UserInfoInteractor.Store(&user); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

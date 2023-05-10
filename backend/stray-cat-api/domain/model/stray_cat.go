@@ -3,7 +3,7 @@ package model
 import "time"
 
 type StrayCat struct {
-	CatID           string
+	CatID           int
 	UserID          string
 	PhotoData       string
 	CaptureDateTime time.Time

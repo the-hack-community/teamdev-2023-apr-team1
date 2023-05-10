@@ -3,7 +3,7 @@ package model
 import "time"
 
 type Reaction struct {
-	ReactionID string
+	ReactionID int
 	UserID     string
 	CatID      string
 	DateTime   time.Time

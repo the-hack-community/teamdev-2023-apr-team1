@@ -12,7 +12,7 @@ CREATE TABLE locations (
 );
 
 CREATE TABLE stray_cats (
-    cat_id VARCHAR(255) PRIMARY KEY,
+    cat_id SERIAL PRIMARY KEY,
     user_id VARCHAR(255) NOT NULL REFERENCES users(user_id),
     photo_data TEXT NOT NULL,
     capture_date_time TIMESTAMP NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE stray_cats (
 CREATE TABLE reactions (
     reaction_id VARCHAR(255) PRIMARY KEY,
     user_id VARCHAR(255) NOT NULL REFERENCES users(user_id),
-    cat_id VARCHAR(255) NOT NULL REFERENCES stray_cats(cat_id),
+    cat_id INT NOT NULL REFERENCES stray_cats(cat_id),
     date_time TIMESTAMP NOT NULL
 );
 
