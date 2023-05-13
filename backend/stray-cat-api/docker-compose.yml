@@ -35,6 +35,14 @@ services:
       - "8081:8081"
     depends_on:
       - db
+  seed:
+    build:
+      context: .
+      dockerfile: Dockerfile.seed
+    environment:
+      SERVER_NAME: api  # Here we set the environment variable 'SERVER_NAME' to 'api'
+    depends_on:
+      - api
 
 volumes:
   db_data: {}

@@ -1,0 +1,10 @@
+# Dockerfile.seed
+FROM python:3.8
+
+WORKDIR /app
+
+COPY ./seed.py /app/seed.py
+
+RUN pip install requests
+
+CMD ["python", "/app/seed.py"]
