@@ -67,9 +67,8 @@ func (h *StrayCatHandler) Create(c *gin.Context) {
 
 	// captureDateTimeを解析する
 	captureDateTime, err := time.Parse(time.RFC3339, captureDateTimeStr)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
+	if err != nil || captureDateTimeStr == "" {
+		captureDateTime = time.Now()
 	}
 
 	// locationを解析する
