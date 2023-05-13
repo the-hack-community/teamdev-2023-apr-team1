@@ -81,6 +81,7 @@ func main() {
 	r.GET("/users/:userId", userHandler.GetByID)
 	r.POST("/users/:userId", userHandler.Create)
 	r.POST("/stray-cats", strayCatHandler.Create)
+	r.GET("/stray-cats", strayCatHandler.GetAll)
 	r.GET("/stray-cats/:catId", strayCatHandler.GetByID)
 
 	// api := r.Group("/api")
@@ -88,16 +89,6 @@ func main() {
 	// 	//
 	// 	v1 := api.Group("/v1")
 	// 	{
-	// 		// 認証が不要なエンドポイント
-	// 		users := v1.Group("/users")
-	// 		{
-	// 			users.GET("/", userHandler.GetAll)
-	// 			users.GET("/:id", userHandler.GetByID)
-	// 			users.POST("/", userHandler.Create)
-	// 			users.PUT("/:id", userHandler.Update)
-	// 			users.DELETE("/:id", userHandler.Delete)
-	// 		}
-
 	// 		// 認証が必要なエンドポイント
 	// 		authUsers := v1.Group("/auth-users")
 	// 		authUsers.Use(FirebaseAuthMiddleware(app))
