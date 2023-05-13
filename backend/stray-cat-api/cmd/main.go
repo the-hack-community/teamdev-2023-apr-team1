@@ -81,7 +81,7 @@ func main() {
 	r.GET("/users/:userId", userHandler.GetByID)
 	r.POST("/users/:userId", userHandler.Create)
 	r.POST("/stray-cats", strayCatHandler.Create)
-	r.GET("/stray-cats", strayCatHandler.GetAll)
+	r.GET("/stray-cats/search", strayCatHandler.GetAll)
 	r.GET("/stray-cats/:catId", strayCatHandler.GetByID)
 
 	// api := r.Group("/api")

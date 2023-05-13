@@ -3,13 +3,13 @@ package model
 import "time"
 
 type StrayCat struct {
-	CatID           int
-	UserID          string
-	PhotoData       string
-	CaptureDateTime time.Time
-	Location        Location
-	Name            string
-	Features        string
-	Condition       string
-	Reactions       []Reaction
+	CatID           int        `json:"catId"`
+	UserID          string     `json:"userId"`
+	PhotoData       string     `json:"photoData"`
+	CaptureDateTime time.Time  `json:"captureDateTime"`
+	Location        Location   `json:"location"`
+	Name            string     `json:"name"`
+	Features        string     `json:"features"`
+	Condition       string     `json:"condition"`
+	Reactions       []Reaction `json:"reactions"`
 }
