@@ -1,8 +1,16 @@
+import {
+  useFonts,
+  NotoSansJP_400Regular
+} from '@expo-google-fonts/noto-sans-jp';
 import { Button, Text, Box, NativeBaseProvider } from 'native-base';
 import React from 'react';
 import { View, Alert } from 'react-native';
 
 function LoginScreen() {
+  const [fontsLoaded] = useFonts({
+    NotoSansJP_400Regular
+  });
+
   const handleGoogleLogin = () => {
     Alert.alert('Googleアカウントでログイン');
   };
@@ -10,6 +18,10 @@ function LoginScreen() {
   const handleFacebookLogin = () => {
     Alert.alert('Facebookアカウントでログイン');
   };
+
+  if (!fontsLoaded) {
+    return <View></View>;
+  }
 
   return (
     <NativeBaseProvider>
@@ -25,7 +37,10 @@ function LoginScreen() {
             alignItems='center'
             onPress={handleGoogleLogin}
             style={{ backgroundColor: 'white', width: '100%' }}>
-            <Text fontSize='sm' color='black'>
+            <Text
+              fontSize='sm'
+              color='black'
+              fontFamily='NotoSansJP_400Regular'>
               Googleアカウントでログイン
             </Text>
           </Button>
@@ -35,7 +50,10 @@ function LoginScreen() {
             alignItems='center'
             onPress={handleFacebookLogin}
             style={{ backgroundColor: '#385490', width: '100%' }}>
-            <Text fontSize='sm' color='white'>
+            <Text
+              fontSize='sm'
+              color='white'
+              fontFamily='NotoSansJP_400Regular'>
               Facebookアカウントでログイン
             </Text>
           </Button>
