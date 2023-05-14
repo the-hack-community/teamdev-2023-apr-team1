@@ -4,12 +4,15 @@ import { Alert, StyleSheet, View } from 'react-native';
 import { Dimensions } from 'react-native';
 import MapView, {
   MapPressEvent,
-  Marker,
   MarkerPressEvent,
   PROVIDER_GOOGLE
 } from 'react-native-maps';
 
-import { GOOGLE_MAPS_API_KEY } from '../../../../environment';
+import { BASE_URL, GOOGLE_MAPS_API_KEY } from '../../../../environment';
+import { IStrayCat } from '../../../types';
+
+import Marker from './marker';
+import MapMarker from './marker';
 
 //init position: Tokyo
 const INIT_LAT = 35.681236;
@@ -45,10 +48,10 @@ interface IRegion {
   longitudeDelta: number;
 }
 
-const markerList: IGeolocation[] = [];
+const markerList: IStrayCat[] = [];
 
 export default function Map() {
-  const [markers, setMarkers] = useState<IGeolocation[]>([]);
+  const [markers, setMarkers] = useState<IStrayCat[]>([]);
   const [region, setRegion] = useState<IRegion>(initRegion);
   const [address, setAddress] = useState<string>('');
 
@@ -73,7 +76,15 @@ export default function Map() {
   };
 
   useEffect(() => {
-    setMarkers(markerList);
+    //ステネコのデータを取得
+    const fetchStrayCatsData = async () => {
+      const url = `${BASE_URL}/stray-cats/search`;
+      const res = await fetch(url);
+      const data = await res.json();
+      setMarkers(data);
+    };
+
+    fetchStrayCatsData();
   }, []);
 
   return (
@@ -104,26 +115,10 @@ export default function Map() {
             latitude: e.nativeEvent.coordinate.latitude,
             longitude: e.nativeEvent.coordinate.longitude
           };
-          setMarkers((prev) => [...prev, marker]);
         }}>
         {markers &&
           markers.map((m, index) => {
-            return (
-              <Marker
-                title={index.toString()}
-                pinColor='red'
-                coordinate={{
-                  latitude: Number(m.latitude),
-                  longitude: Number(m.longitude)
-                }}
-                description={index.toString()}
-                key={index}
-                onPress={(e: MarkerPressEvent) => {
-                  e.stopPropagation();
-                  Alert.alert('Marker pressed!');
-                }}
-              />
-            );
+            return <MapMarker m={m} key={index} />;
           })}
       </MapView>
     </>
