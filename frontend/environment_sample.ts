@@ -1,5 +1,5 @@
 // ローカルAPIサーバのURL
-export const BASE_URL = 'localhost:8080';
+export const BASE_URL = 'http://localhost:8080';
 
 // GoogleMapのAPIキー
 export const GOOGLE_MAPS_API_KEY = '';
