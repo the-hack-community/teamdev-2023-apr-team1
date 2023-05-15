@@ -11,13 +11,12 @@ React Nativeを使用した地図アプリケーションです。
 - `$ cd frontend`
 - `$ npm install`
 
-`environment_sample.ts`を`environment.ts`にリネームしてください。
-`app.sample.json`を`app.json`にリネームしてください。
-
-GoogleMapApiKeyが必要です。
+- `environment_sample.ts`を`environment.ts`にリネームしてください。
+- `app.sample.json`を`app.json`にリネームしてください。
+- GoogleMapApiKeyが必要です。
 `app.json`と`environment.ts`にGoogleMapApiKeyを設定してください。
+- Firebaseコンソールから`google-services.json`をダウンロードし、frontendのルートフォルダに配置してください。
 
-VS Codeの使用をお勧めします。
 ## ローカルでのサーバー起動方法
 
 `$ npm run start`
