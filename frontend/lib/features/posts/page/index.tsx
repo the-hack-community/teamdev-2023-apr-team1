@@ -36,7 +36,6 @@ function PostsScreen() {
 
   return (
     <NativeBaseProvider>
-      <ScrollView>
         <View style={{ flex: 1, alignItems: 'center' }}>
           <FlatList
             data={catImages}
@@ -55,7 +54,6 @@ function PostsScreen() {
             contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
           />
         </View>
-      </ScrollView>
     </NativeBaseProvider>
   );
 }
