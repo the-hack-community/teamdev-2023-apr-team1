@@ -79,9 +79,13 @@ export default function Map() {
     //ステネコのデータを取得
     const fetchStrayCatsData = async () => {
       const url = `${BASE_URL}/stray-cats/search`;
-      const res = await fetch(url);
-      const data = await res.json();
-      setMarkers(data);
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        setMarkers(data);
+      } catch (e) {
+        console.error(e);
+      }
     };
 
     fetchStrayCatsData();

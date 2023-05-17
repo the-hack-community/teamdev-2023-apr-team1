@@ -36,24 +36,24 @@ function PostsScreen() {
 
   return (
     <NativeBaseProvider>
-        <View style={{ flex: 1, alignItems: 'center' }}>
-          <FlatList
-            data={catImages}
-            renderItem={({ item, index }) => {
-              return (
-                <View style={{ width: imageWidth }}>
-                  <Image
-                    style={{ width: '100%', height: imageHeight }}
-                    resizeMode='cover'
-                    source={{ uri: item.url }}
-                  />
-                </View>
-              );
-            }}
-            numColumns={2}
-            contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
-          />
-        </View>
+      <View style={{ flex: 1, alignItems: 'center' }}>
+        <FlatList
+          data={catImages}
+          renderItem={({ item, index }) => {
+            return (
+              <View style={{ width: imageWidth }}>
+                <Image
+                  style={{ width: '100%', height: imageHeight }}
+                  resizeMode='cover'
+                  source={{ uri: item.url }}
+                />
+              </View>
+            );
+          }}
+          numColumns={2}
+          contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
+        />
+      </View>
     </NativeBaseProvider>
   );
 }

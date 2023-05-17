@@ -41,7 +41,7 @@ const BottomTabNavigator = () => {
           }}
         />
         <Tab.Screen
-          name='画像'
+          name='投稿画像'
           component={PostsScreen}
           options={{
             tabBarIcon: ({ color, size }) => (

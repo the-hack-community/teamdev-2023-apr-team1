@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "react-native-map-app",
-    "slug": "react-native-map-app",
+    "name": "stray-cats-stamp",
+    "slug": "stray-cats-stamp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,7 +11,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "config": {
@@ -26,7 +28,8 @@
       }
     },
     "android": {
-      "package": "com.example.reactnativemapapp",
+      "package": "com.straycatstamp",
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -42,12 +45,18 @@
       ],
       "config": {
         "googleMaps": {
-          "apiKey": "[Android API Key]"
+          "apiKey": "[iOS API Key]"
         }
       }
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "615c4350-9eaa-4e1c-a7e3-b888efc4062d"
+      }
+    },
+    "owner": "dtakkiy"
   }
 }
