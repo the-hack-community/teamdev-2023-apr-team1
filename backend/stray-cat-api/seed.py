@@ -21,8 +21,12 @@ def post_cat_info():
     img_data = requests.get(data[0]['url']).content
 
     # 日本のランダムな座標を生成
-    lat = random.uniform(24.0, 46.0)  # 緯度
-    long = random.uniform(123.0, 154.0)  # 経度
+    # lat = random.uniform(24.0, 46.0)  # 緯度
+    # long = random.uniform(123.0, 154.0)  # 経度
+
+    # 東京駅周辺にランダムな座標を生成
+    lat = random.uniform(35.660000, 35.690000)  # 緯度
+    long = random.uniform(139.735000, 139.760000)  # 経度
 
     # データを準備
     post_data = {
@@ -39,7 +43,8 @@ def post_cat_info():
     }
 
     # APIサーバにデータを送信
-    response = requests.post(f'http://{SERVER_NAME}:8080/stray-cats', data=post_data, files=files)
+    # response = requests.post(f'http://{SERVER_NAME}:8080/stray-cats', data=post_data, files=files)
+    response = requests.post(f'http://192.168.1.15:8080/stray-cats', data=post_data, files=files)
 
     return response.status_code
 
