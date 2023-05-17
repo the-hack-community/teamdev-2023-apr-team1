@@ -1,4 +1,4 @@
-package com.straycatsstamp;
+package com.straycatstamp;
 
 import android.os.Build;
 import android.os.Bundle;

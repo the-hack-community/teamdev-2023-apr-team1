@@ -28,7 +28,7 @@
       }
     },
     "android": {
-      "package": "com.straycatsstamp",
+      "package": "com.straycatstamp",
       "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",

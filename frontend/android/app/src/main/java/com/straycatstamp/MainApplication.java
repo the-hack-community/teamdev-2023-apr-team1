@@ -1,4 +1,4 @@
-package com.straycatsstamp;
+package com.straycatstamp;
 
 import android.app.Application;
 import android.content.res.Configuration;

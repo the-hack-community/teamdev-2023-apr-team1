@@ -12,3 +12,6 @@ export const FIREBASE_PROJECT_ID = '';
 export const FIREBASE_STORAGE_BUCKET = '';
 export const FIREBASE_MESSAGING_SENDER_ID = '';
 export const FIREBASE_APP_ID = '';
+
+// Firebase Authの設定 type3を指定
+export const WEB_CLIENT_ID = '';

@@ -2,21 +2,61 @@ import {
   useFonts,
   NotoSansJP_400Regular
 } from '@expo-google-fonts/noto-sans-jp';
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  User,
+  statusCodes
+} from '@react-native-google-signin/google-signin';
 import { Button, Text, Box, NativeBaseProvider } from 'native-base';
-import React from 'react';
-import { View, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { View } from 'react-native';
+
+import { WEB_CLIENT_ID } from '../../../../environment';
+
+GoogleSignin.configure({
+  webClientId: WEB_CLIENT_ID
+});
 
 function LoginScreen() {
   const [fontsLoaded] = useFonts({
     NotoSansJP_400Regular
   });
+  const [userInfo, setUserInfo] = useState<User | null>();
+  const [isSigninInProgress, setIsSigninInProgress] = useState<boolean>(false);
 
-  const handleGoogleLogin = () => {
-    Alert.alert('Googleアカウントでログイン');
+  //Googleログイン
+  const onGoogleLogin = async () => {
+    setIsSigninInProgress(true);
+    try {
+      await GoogleSignin.hasPlayServices({
+        showPlayServicesUpdateDialog: true
+      });
+      const userInfo = await GoogleSignin.signIn();
+      setUserInfo(userInfo);
+    } catch (error: any) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // console.log('SIGN_IN_CANCELLED');
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // console.log('IN_PROGRESS');
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // console.log('PLAY_SERVICES_NOT_AVAILABLE');
+      } else {
+        console.log(error);
+      }
+    }
+    setIsSigninInProgress(false);
   };
 
-  const handleFacebookLogin = () => {
-    Alert.alert('Facebookアカウントでログイン');
+  //サインアウト
+  const onSignOut = async () => {
+    try {
+      await GoogleSignin.signOut();
+      console.log('signOut');
+      setUserInfo(null);
+    } catch (error: any) {
+      console.error(error);
+    }
   };
 
   if (!fontsLoaded) {
@@ -32,32 +72,25 @@ function LoginScreen() {
           alignItems: 'center',
           backgroundColor: '#eeeeee'
         }}>
-        <Box py='4' width='250'>
-          <Button
-            alignItems='center'
-            onPress={handleGoogleLogin}
-            style={{ backgroundColor: 'white', width: '100%' }}>
-            <Text
-              fontSize='sm'
-              color='black'
-              fontFamily='NotoSansJP_400Regular'>
-              Googleアカウントでログイン
-            </Text>
-          </Button>
-        </Box>
-        <Box py='4' width='250'>
-          <Button
-            alignItems='center'
-            onPress={handleFacebookLogin}
-            style={{ backgroundColor: '#385490', width: '100%' }}>
-            <Text
-              fontSize='sm'
-              color='white'
-              fontFamily='NotoSansJP_400Regular'>
-              Facebookアカウントでログイン
-            </Text>
-          </Button>
-        </Box>
+        {!userInfo ? (
+          <Box py='4' width='250'>
+            <GoogleSigninButton
+              disabled={isSigninInProgress}
+              onPress={() => onGoogleLogin()}></GoogleSigninButton>
+          </Box>
+        ) : (
+          <View>
+            <Text> ログインユーザのメールアドレス:</Text>
+            <Text>{userInfo && userInfo?.user?.email}</Text>
+            <Box py='4' width='250'>
+              <Button
+                onPress={() => onSignOut()}
+                style={{ backgroundColor: '#fff' }}>
+                <Text>サインアウト</Text>
+              </Button>
+            </Box>
+          </View>
+        )}
       </View>
     </NativeBaseProvider>
   );

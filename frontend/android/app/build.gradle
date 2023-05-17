@@ -113,9 +113,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace 'com.straycatsstamp'
+    namespace 'com.straycatstamp'
     defaultConfig {
-        applicationId 'com.straycatsstamp'
+        applicationId 'com.straycatstamp'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
