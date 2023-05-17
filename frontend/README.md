@@ -1,5 +1,5 @@
 # Frontend
-React Nativeを使用した地図アプリケーションです。
+ステネコスタンプ、フロントエンドサイドの実装です。
 
 ## 使用技術
 - https://reactnative.dev/
@@ -7,7 +7,7 @@ React Nativeを使用した地図アプリケーションです。
 
 ## セットアップ
 - `$ npm install -g expo-cli`
-- `$ git clone`
+- `$ git clone https://github.com/the-hack-community/teamdev-2023-apr-team1.git`
 - `$ cd frontend`
 - `$ npm install`
 
@@ -20,5 +20,7 @@ React Nativeを使用した地図アプリケーションです。
 ## ローカルでのサーバー起動方法
 
 `$ npm run start`
+or
+`$ npx expo start`
 
-a(Android)またはi(iOS)を押すと、シミュレーターが起動します。
+コマンド実行後、インタラクティブモードで、`a`(Android)または`i`(iOS)を押すと、シミュレーターが起動します。

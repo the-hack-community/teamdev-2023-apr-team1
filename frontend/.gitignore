@@ -349,3 +349,4 @@ $RECYCLE.BIN/
 google-services.json
 android/app/google-services.json
 android/app/src/main/AndroidManifest.xml
+android/app/src/main/*.xml
