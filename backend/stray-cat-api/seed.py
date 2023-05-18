@@ -43,8 +43,7 @@ def post_cat_info():
     }
 
     # APIサーバにデータを送信
-    # response = requests.post(f'http://{SERVER_NAME}:8080/stray-cats', data=post_data, files=files)
-    response = requests.post(f'http://192.168.1.15:8080/stray-cats', data=post_data, files=files)
+    response = requests.post(f'http://{SERVER_NAME}:8080/stray-cats', data=post_data, files=files)
 
     return response.status_code
 
