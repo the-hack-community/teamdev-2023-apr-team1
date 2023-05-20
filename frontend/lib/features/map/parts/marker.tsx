@@ -5,10 +5,11 @@ import { IStrayCat } from '../../../types';
 
 type Props = {
   m: IStrayCat;
+  handleOnPress: (e: MarkerPressEvent) => void;
 };
 
 export default function MapMarker(props: Props) {
-  const { m } = props;
+  const { m, handleOnPress } = props;
 
   return (
     <>
@@ -20,10 +21,11 @@ export default function MapMarker(props: Props) {
           longitude: Number(m?.location?.long)
         }}
         description={m?.features}
-        onPress={(e: MarkerPressEvent) => {
-          e.stopPropagation();
-          Alert.alert(`特徴:${m?.condition}\n 発見日時: ${m?.captureDateTime}`);
-        }}
+        onPress={handleOnPress}
+        // onPress={(e: MarkerPressEvent) => {
+        // e.stopPropagation();
+        // Alert.alert(`特徴:${m?.condition}\n 発見日時: ${m?.captureDateTime}`);
+        // }}
       />
     </>
   );

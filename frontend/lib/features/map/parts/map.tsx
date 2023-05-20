@@ -11,7 +11,7 @@ import MapView, {
 import { BASE_URL, GOOGLE_MAPS_API_KEY } from '../../../../environment';
 import { IStrayCat } from '../../../types';
 
-import Marker from './marker';
+import DetailDialog from './detailDialog';
 import MapMarker from './marker';
 
 //init position: Tokyo
@@ -91,6 +91,16 @@ export default function Map() {
     fetchStrayCatsData();
   }, []);
 
+  const [selectedMarker, setSelectedMarker] = useState<IStrayCat | null>(null);
+  const [isShowDialog, setIsShowDialog] = useState<boolean>(false);
+
+  const handleOnPressMarker = (e: MarkerPressEvent, m: IStrayCat) => {
+    e.stopPropagation();
+
+    setIsShowDialog(true);
+    setSelectedMarker(m);
+  };
+
   return (
     <>
       <View style={styles.searchContainer}>
@@ -115,16 +125,29 @@ export default function Map() {
         }}
         onPress={(e: MapPressEvent) => {
           e.stopPropagation();
-          const marker = {
-            latitude: e.nativeEvent.coordinate.latitude,
-            longitude: e.nativeEvent.coordinate.longitude
-          };
+          // const marker = {
+          //   latitude: e.nativeEvent.coordinate.latitude,
+          //   longitude: e.nativeEvent.coordinate.longitude
+          // };
         }}>
         {markers &&
           markers.map((m, index) => {
-            return <MapMarker m={m} key={index} />;
+            return (
+              <MapMarker
+                m={m}
+                key={index}
+                handleOnPress={(e) => handleOnPressMarker(e, m)}
+              />
+            );
           })}
       </MapView>
+      <View>
+        <DetailDialog
+          m={selectedMarker}
+          isShow={isShowDialog}
+          setIsShow={setIsShowDialog}
+        />
+      </View>
     </>
   );
 }
