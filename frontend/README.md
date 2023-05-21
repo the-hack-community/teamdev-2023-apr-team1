@@ -15,7 +15,7 @@
 - `app.sample.json`を`app.json`にリネームしてください。
 - GoogleMapApiKeyが必要です。
 `app.json`と`environment.ts`にGoogleMapApiKeyを設定してください。
-- Firebaseコンソールから`google-services.json`をダウンロードし、frontendのルートフォルダに配置してください。
+- Firebaseコンソールから`google-services.json`をダウンロードし、frontendのルートフォルダに配置してください。 
 
 ## ローカルでのサーバー起動方法
 
@@ -24,3 +24,15 @@ or
 `$ npx expo start`
 
 コマンド実行後、インタラクティブモードで、`a`(Android)または`i`(iOS)を押すと、シミュレーターが起動します。
+
+## React Native Firebaseライブラリをプロジェクトにリンク、再構築を行う場合
+
+以下のコマンドを実行する。
+
+`$ npx react-native run-android`
+
+## ネイティブコードへの反映
+
+以下のコマンドを実行する。
+
+`$ npx expo run:android`
