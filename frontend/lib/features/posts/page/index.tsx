@@ -14,7 +14,7 @@ function PostsScreen() {
   const [catImages, setCatImages] = useState<jsonData[]>([]);
   const [imageWidth, setImageWidth] = useState<number>(0);
   const [imageHeight, setImageHeight] = useState<number>(0);
-  const baseURL = 'https://api.thecatapi.com/v1/images/search';
+  const baseURL = 'http://localhost:8080/stray-cats/search';
 
   const fetchData = async () => {
     // 10件のデータを取得
