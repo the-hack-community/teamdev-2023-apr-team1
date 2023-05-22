@@ -36,3 +36,18 @@ or
 以下のコマンドを実行する。
 
 `$ npx expo run:android`
+
+## APKファイルの生成
+
+以下のコマンドを実行する。
+
+`cd android`
+`./gradlew assembleDebug`
+
+実行後、`android/app/build/outputs/apk/debug/app-debug.apk`ファイルが生成される。
+
+ストアにリリースする場合は、以下コマンドを実行する。
+`./gradlew bundleRelease`
+
+詳しくは、
+https://reactnative.dev/docs/signed-apk-android
