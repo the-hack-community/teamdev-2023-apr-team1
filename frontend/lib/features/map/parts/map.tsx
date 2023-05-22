@@ -1,6 +1,7 @@
-import { Button, Input } from 'native-base';
+import { useIsFocused } from '@react-navigation/native';
+import { Button } from 'native-base';
 import { useState, useEffect } from 'react';
-import { Alert, StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, View, TextInput } from 'react-native';
 import { Dimensions } from 'react-native';
 import MapView, {
   MapPressEvent,
@@ -48,8 +49,6 @@ interface IRegion {
   longitudeDelta: number;
 }
 
-const markerList: IStrayCat[] = [];
-
 export default function Map() {
   const [markers, setMarkers] = useState<IStrayCat[]>([]);
   const [region, setRegion] = useState<IRegion>(initRegion);
@@ -63,13 +62,18 @@ export default function Map() {
         `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${GOOGLE_MAPS_API_KEY}`
       );
       const data = await res.json();
-      const location = data.results[0].geometry.location;
-      setRegion({
-        latitude: location.lat,
-        longitude: location.lng,
-        latitudeDelta: LATITUDE_DELTA,
-        longitudeDelta: LONGITUDE_DELTA
-      });
+      if (data.status === 'OK') {
+        const location = data.results[0].geometry.location;
+
+        setRegion({
+          latitude: location.lat,
+          longitude: location.lng,
+          latitudeDelta: LATITUDE_DELTA,
+          longitudeDelta: LONGITUDE_DELTA
+        });
+      } else {
+        console.log('Geocoding API request failed.');
+      }
     } catch (e) {
       console.error(e);
     }
@@ -103,18 +107,27 @@ export default function Map() {
 
   return (
     <>
+      {region && <></>}
       <View style={styles.searchContainer}>
-        <Input
+        <TextInput
           placeholder='住所を入力してください'
           value={address}
-          w='80%'
+          style={{
+            borderColor: 'gray',
+            borderWidth: 1,
+            borderRadius: 4,
+            width: '100%',
+            padding: 8
+          }}
+          // w='100%'
           onChangeText={(text) => setAddress(text)}
+          onSubmitEditing={handleLocationSearch}
         />
-        <Button onPress={handleLocationSearch}>検索</Button>
+        {/* <Button onPress={handleLocationSearch}>検索</Button> */}
       </View>
       <MapView
         style={styles.map}
-        initialRegion={INITIAL_POSITION}
+        // initialRegion={INITIAL_POSITION}
         region={region}
         provider={PROVIDER_GOOGLE}
         onRegionChange={(region) => {
