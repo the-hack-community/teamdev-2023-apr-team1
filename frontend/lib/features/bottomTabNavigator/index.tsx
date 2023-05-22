@@ -8,6 +8,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import LoginScreen from '../login/page';
 import MapScreen from '../map/page';
+import NotificationScreen from '../notification/page';
 import PostsScreen from '../posts/page';
 const Tab = createBottomTabNavigator();
 
@@ -55,6 +56,15 @@ const BottomTabNavigator = () => {
           options={{
             tabBarIcon: ({ color, size }) => (
               <MaterialIcons name='login' size={size} color={color} />
+            )
+          }}
+        />
+        <Tab.Screen
+          name='通知'
+          component={NotificationScreen}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialIcons name='notifications' size={size} color={color} />
             )
           }}
         />
